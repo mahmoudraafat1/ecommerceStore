@@ -29,3 +29,13 @@ Route::get('auth/google' , [GoogleAuthController::class,'redirect'])->name('goog
 
 Route::get('auth/google/call-back' , [GoogleAuthController::class,'callbackGoogle']);
 
+
+Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+    
+
+    Route::match(['get','post'] , 'login' , 'AdminController@login');
+
+    Route::get('dashboard' , 'AdminController@dashboard');
+
+});
+
