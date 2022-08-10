@@ -3,7 +3,7 @@
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}" charset="utf-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Nabil Ecommerce Admin</title>
   <!-- plugins:css -->
@@ -228,6 +228,9 @@
   <script src="{{ url('admin/js/dashboard.js')}}"></script>
   <script src="{{ url('admin/js/Chart.roundedBarCharts.js')}}"></script>
   <!-- End custom js for this page-->
+  <!-- Custom admin JS -->
+  <script src="{{ url('admin/js/custom.js') }}"></script>
+  <!-- End Custom admin JS -->
 </body>
 
 </html>

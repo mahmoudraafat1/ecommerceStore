@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FacebookAuthController;
-
+use Illuminate\Auth\Events\Logout;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,20 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
     Route::match(['get','post'] , 'login' , 'AdminController@login');
 
-    Route::get('dashboard' , 'AdminController@dashboard');
 
+    //Adding auth guard group to the admin panel.
+
+    Route::group(['middleware' => ['admin']] , function(){
+
+        Route::get('dashboard' , 'AdminController@dashboard');
+        Route::get('logout' , 'AdminController@logout');
+
+        // update admin pass and details route
+        Route::match(['get' , 'post'] , 'update-admin-password' , 'AdminController@updateAdminPassword');
+        
+        //check current admin password
+        Route::post('check-admin-password' , 'AdminController@checkAdminPassword');
+    });
+    
 });
 

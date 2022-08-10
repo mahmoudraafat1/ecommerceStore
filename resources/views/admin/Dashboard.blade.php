@@ -6,8 +6,7 @@
           <div class="col-md-12 grid-margin">
               <div class="row">
                   <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                      <h3 class="font-weight-bold">Welcome Aamir</h3>
-                      <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6>
+                      <h3 class="font-weight-bold">Welcome {{ $adminName['name'] }}</h3>
                   </div>
                   <div class="col-12 col-xl-4">
                       <div class="justify-content-end d-flex">
@@ -698,6 +697,11 @@
           </div>
       </div>
   </div>
+    <!-- Custom js for this page-->
+    <script src="{{ url('admin/js/dashboard.js')}}"></script>
+    <script src="{{ url('admin/js/Chart.roundedBarCharts.js')}}"></script>
+    <!-- End custom js for this page-->
+  
   <!-- content-wrapper ends -->
   <!-- partial:partials/_footer.html -->
   @include('admin\layout\footer')
