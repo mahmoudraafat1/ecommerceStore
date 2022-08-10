@@ -1,4 +1,4 @@
-$(document).onclick(function(){
+$(document).ready(function(){
     // checking if the current admin password is correct (in the update-admin-password page)
     $("#Current_Password").keyup(function(){
         var Current_Password = $("#Current_Password").val();

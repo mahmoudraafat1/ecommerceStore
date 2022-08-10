@@ -8,7 +8,23 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Update admin password</h4>
-                  <form class="forms-sample">
+                  @if(Session::has('error_message'))
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Error</strong> {{Session::get('error_message')}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                   </div>
+                @endif
+                @if(Session::has('Success_message'))
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong>Success</strong> {{ Session::get('Success_message') }}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                   </div>
+                @endif
+                  <form class="forms-sample" action="{{ url('admin/update-admin-password') }}" method="POST" name="updateAdminPasswordForm" id="updateAdminPasswordForm" >@csrf
                     <div class="form-group">
                       <label>Admin Name</label>
                       <!-- recieving the admin name from the controller and injecting it to the input label ------>

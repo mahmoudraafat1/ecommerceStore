@@ -14,10 +14,28 @@ class AdminController extends Controller
     public function dashboard(){
         // sending the admin data who logged in to the dashboard page and selecting only his name from the dashboard.php page
         $adminName = Admin::where('email' , Auth::guard('admin')->user()->email)->first()->toArray();
+        // this return the update password page
         return view('admin\dashboard')->with(compact('adminName'));
     }
+    // this function is managing the post request that will be send after the admin submit the update form
+    public function updateAdminPassword(Request $request){
+        if($request->isMethod('POST')){
+            $data = $request->all();
+            if(Hash::check($data['Current_Password'], Auth::guard('admin')->user()->password)){
+                // Now we will check if the new password is matching with Confirm new password
+                if($data['New_Password']==$data['Confirm_New_Password']){
+                    Admin::where('id',Auth::guard('admin')->user()->id)->update(['password' => hash::make($data['New_Password'])]);
+                    return redirect()->back()->with('Success_message' , 'Your Current Password has been updated Successfully!');
+                }
+                else{
+                    return redirect()->back()->with('error_message' , 'Your New Password and Confrim password are not matching!');
+                }
+            }
+            else{
+                return redirect()->back()->with('error_message' , 'Your Current Password is Incorrect!');
+            }
+        }
 
-    public function updateAdminPassword(){
         // sending the admin data who logged in to the dashboard page and selecting his name , email and type from the update-admin-password.phg page
         $adminDetails = Admin::where('email' , Auth::guard('admin')->user()->email)->first()->toArray();
         return view('admin/settings/update-admin-password')->with(compact('adminDetails'));

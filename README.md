@@ -1,3 +1,10 @@
+
+1. Create MySQL database with  name ecommerce
+2. put the username as a root and leave the password empty
+3. run the following commad in your terminal npm run dev
+4. run php artisan db:seed just one time before you start your localhost only for the first time
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
