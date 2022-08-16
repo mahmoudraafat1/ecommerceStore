@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('vendors_bank_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->Integer('Vendor_id');
-            $table->string('mobile_number')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('image');
-            $table->tinyInteger('status');
+            $table->integer('vendor_id');
+            $table->string('account_holder_name');
+            $table->string('bank_name');
+            $table->string('expiration_data');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('vendors_bank_details');
     }
 };

@@ -49,6 +49,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         
         //check current admin password
         Route::post('check-admin-password' , 'AdminController@checkAdminPassword');
+
+        //update admin details
+        Route::match(['get' , 'post'], 'update-admin-details' , 'AdminController@updateAdminDetails');
+
+        Route::match(['get' , 'post'],'update-vendor-details/{slug}' , 'VendorController@updateVendorDetails');
     });
     
 });

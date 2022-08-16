@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use app\Models\Admin;
-
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -51,6 +51,50 @@ class AdminController extends Controller
             return "false";
         }
 
+    }
+
+    public function updateAdminDetails(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $rules = [
+                // check this regex later on and apply it for each input field 
+                'admin_name' => 'required||regex:/^[\pL\s\-]+$/u',
+                'admin_phone_number' =>'required|numeric',
+            ];
+
+            $customMessage = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.regex' => 'Valid Name is required',
+                'admin_mobile.required' => 'mobile number is required',
+                'admin_mobile.numeric' =>'valid mobile number is required',
+            ];
+            $this->validate($request , $rules , $customMessage);
+            // uploading admin photo
+            if($request->hasFile('admin_image')){
+                $image_tmp = $request->file('admin_image');
+                if($image_tmp->isValid()){
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // Generate New Image Name
+                    srand();
+                    $imageName =rand().'.'.$extension;
+                    $imagePath = 'admin/images/photos/'.$imageName;
+                    // Upload the Image
+                    Image::make($image_tmp)->save($imagePath);
+                }
+            }else if(!empty($data['current_admin_image'])){
+                $imageName = $data['current_admin_image'];
+            }else{
+                $imageName = "";
+            }
+
+            // passing the new admin details to the database
+            Admin::where('id' , Auth::guard('admin')->user()->id)->update(['name' =>$data['admin_name'],
+             'mobile_number'=>$data['admin_phone_number'],'image'=>$imageName]);
+
+            return redirect()->back()->with('Success_message' , 'Admin Details updated successfully');
+        }
+        return view('admin/settings/update-admin-details');
     }
 
     public function login(Request $request){
